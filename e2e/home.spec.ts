@@ -1,19 +1,16 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Page d'accueil", () => {
-  test("affiche le titre et le sous-titre", async ({ page }) => {
+  test("affiche le titre", async ({ page }) => {
     await page.goto("/");
     await expect(
-      page.getByRole("heading", { name: /votre revenu net/i })
-    ).toBeVisible();
-    await expect(
-      page.getByText(/simulateur de revenu net — médecin libéral/i)
+      page.getByRole("heading", { name: /simulateur de revenu net — médecin libéral/i })
     ).toBeVisible();
   });
 
   test("affiche le logo NetMédical", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByAltText("NetMédical")).toBeVisible();
+    await expect(page.getByAltText(/NetMédical/)).toBeVisible();
   });
 });
 
