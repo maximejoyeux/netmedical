@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useState, useEffect, useCallback, useRef } from "react";
+import Sidebar from "./components/sidebar";
 import Form, { FormValues } from "./components/form";
 import Results from "./components/results";
 import { fetchRates, simulate } from "@/lib/api";
@@ -79,61 +79,56 @@ export default function Home() {
   }, [formValues, runSim]);
 
   return (
-    <div className="min-h-screen bg-zinc-50 font-sans dark:bg-zinc-950">
-      <main className="mx-auto flex min-h-screen max-w-3xl flex-col items-center px-4 py-8 sm:px-6">
-        <Image
-          className="dark:invert"
-          src="/net-medical.svg"
-          alt="NetMédical"
-          width={280}
-          height={86}
-          priority
-        />
-        <h1 className="mt-6 max-w-sm text-center text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-3xl">
-          Votre revenu net, en toute transparence
-        </h1>
-        <p className="mt-2 text-center text-zinc-600 dark:text-zinc-400">
-          Simulateur de Revenu Net — Médecin Libéral
-        </p>
+    <div className="flex min-h-screen bg-zinc-50 font-sans dark:bg-zinc-950">
+      <Sidebar />
+      <main className="flex-1 overflow-auto">
+        <div className="mx-auto flex items-start flex-col px-4 py-8 pt-2 sm:px-6">
+          <h1 className="text-center text-2xl font-semibold text-zinc-900 dark:text-zinc-50 sm:text-xl">
+            Votre revenu net, en toute transparence
+          </h1>
+          <p className="mt-2 text-center text-zinc-600 dark:text-zinc-400">
+            Simulateur de Revenu Net — Médecin Libéral
+          </p>
 
-        {ratesState.status === "loading" && (
-          <div className="mt-8 text-zinc-500 dark:text-zinc-400">
-            Chargement des taux…
-          </div>
-        )}
-
-        {ratesState.status === "error" && (
-          <div className="mt-8 rounded-lg border border-rose-200 bg-rose-50 p-4 text-rose-800 dark:border-rose-800 dark:bg-rose-950 dark:text-rose-200">
-            <p className="font-medium">Erreur</p>
-            <p className="text-sm">{ratesState.message}</p>
-          </div>
-        )}
-
-        {ratesState.status === "success" && (
-          <>
-            <div className="mt-8 w-full max-w-md">
-              <Form values={formValues} onChange={setFormValues} />
+          {ratesState.status === "loading" && (
+            <div className="mt-8 text-zinc-500 dark:text-zinc-400">
+              Chargement des taux…
             </div>
+          )}
 
-            {simLoading && !simResult && (
-              <div className="mt-6 text-zinc-500 dark:text-zinc-400">
-                Calcul en cours…
-              </div>
-            )}
+          {ratesState.status === "error" && (
+            <div className="mt-8 rounded-lg border border-rose-200 bg-rose-50 p-4 text-rose-800 dark:border-rose-800 dark:bg-rose-950 dark:text-rose-200">
+              <p className="font-medium">Erreur</p>
+              <p className="text-sm">{ratesState.message}</p>
+            </div>
+          )}
 
-            {simError && (
-              <div className="mt-6 rounded-lg border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800 dark:border-rose-800 dark:bg-rose-950 dark:text-rose-200">
-                {simError}
+          {ratesState.status === "success" && (
+            <div className="flex flex-col w-full items-center sm:items-start justify-center gap-6 lg:flex-row">
+              <div className="mt-8 w-full">
+                <Form values={formValues} onChange={setFormValues} />
               </div>
-            )}
 
-            {simResult && !simError && (
-              <div className="mt-8 w-full max-w-md">
-                <Results data={simResult} honoraires={formValues.honoraires} />
-              </div>
-            )}
-          </>
-        )}
+              {simLoading && !simResult && (
+                <div className="mt-6 text-zinc-500 dark:text-zinc-400">
+                  Calcul en cours…
+                </div>
+              )}
+
+              {simError && (
+                <div className="mt-6 rounded-lg border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800 dark:border-rose-800 dark:bg-rose-950 dark:text-rose-200">
+                  {simError}
+                </div>
+              )}
+
+              {simResult && !simError && (
+                <div className="mt-8 w-full">
+                  <Results data={simResult} honoraires={formValues.honoraires} />
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </main>
     </div>
   );
