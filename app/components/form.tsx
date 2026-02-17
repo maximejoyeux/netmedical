@@ -19,6 +19,17 @@ interface FormProps {
   onChange: (values: FormValues) => void;
 }
 
+function formatThousands(n: number): string {
+  if (Number.isNaN(n) || n < 0) return "0";
+  return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\u00A0");
+}
+
+function parseFormattedValue(s: string): number {
+  const raw = s.replace(/\s/g, "");
+  const value = Number(raw);
+  return Number.isNaN(value) ? 0 : Math.max(0, Math.round(value));
+}
+
 export default function Form({ values, onChange }: FormProps) {
   const handleNumberChange =
     (field: keyof FormValues) =>
@@ -29,6 +40,13 @@ export default function Form({ values, onChange }: FormProps) {
         ...values,
         [field]: isNaN(value) ? 0 : value,
       });
+    };
+
+  const handleFormattedNumberChange =
+    (field: "honoraires" | "charges") =>
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const value = parseFormattedValue(e.target.value);
+      onChange({ ...values, [field]: value });
     };
 
   const selectAllOnFocus = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -54,10 +72,11 @@ export default function Form({ values, onChange }: FormProps) {
         <Label htmlFor="honoraires">Honoraires annuels (€)</Label>
         <Input
           id="honoraires"
-          type="number"
+          type="text"
+          inputMode="numeric"
           min={0}
-          value={values.honoraires}
-          onChange={handleNumberChange("honoraires")}
+          value={formatThousands(values.honoraires)}
+          onChange={handleFormattedNumberChange("honoraires")}
           onFocus={selectAllOnFocus}
         />
       </div>
@@ -78,11 +97,16 @@ export default function Form({ values, onChange }: FormProps) {
         <Label htmlFor="charges">Charges professionnelles (€)</Label>
         <Input
           id="charges"
-          type="number"
+          type="text"
+          inputMode="numeric"
           min={0}
           disabled={values.regime === "micro"}
-          value={values.regime === "micro" ? 0 : values.charges}
-          onChange={handleNumberChange("charges")}
+          value={
+            values.regime === "micro"
+              ? "0"
+              : formatThousands(values.charges)
+          }
+          onChange={handleFormattedNumberChange("charges")}
           onFocus={selectAllOnFocus}
         />
       </div>

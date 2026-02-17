@@ -39,10 +39,10 @@ test.describe("Formulaire et simulation", () => {
     );
 
     const honoraires = page.getByLabel(/honoraires annuels/i);
-    await expect(honoraires).toHaveValue("120000");
+    await expect(honoraires).toHaveValue("120\u00A0000");
 
     const charges = page.getByLabel(/charges professionnelles/i);
-    await expect(charges).toHaveValue("25000");
+    await expect(charges).toHaveValue("25\u00A0000");
 
     await expect(page.getByLabel(/régime/i)).toHaveValue("reel");
     await expect(page.getByLabel(/parts fiscales/i)).toHaveValue("2");
@@ -73,7 +73,7 @@ test.describe("Formulaire et simulation", () => {
 
     const honoraires = page.getByLabel(/honoraires annuels/i);
     await honoraires.clear();
-    await honoraires.fill("80000");
+    await honoraires.fill("80 000");
 
     await expect(
       page.getByRole("heading", { name: /résultat de la simulation/i })
