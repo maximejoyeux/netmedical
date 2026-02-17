@@ -80,15 +80,20 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen bg-zinc-50 font-sans dark:bg-zinc-950">
+      <a href="#contenu-principal" className="skip-link">
+        Aller au contenu principal
+      </a>
       <Sidebar />
-      <main className="flex-1 overflow-auto">
+      <main
+        id="contenu-principal"
+        className="flex-1 overflow-auto"
+        role="main"
+        tabIndex={-1}
+      >
         <div className="mx-auto flex items-start flex-col px-4 py-8 pt-2 sm:px-6">
-          <h1 className="text-center text-2xl font-semibold text-zinc-900 dark:text-zinc-50 sm:text-xl">
-            Votre revenu net, en toute transparence
-          </h1>
-          <p className="mt-2 text-center text-zinc-600 dark:text-zinc-400">
+          <h1 className="text-center mt-4 font-semibold text-zinc-900 dark:text-zinc-50 text-xl">
             Simulateur de Revenu Net — Médecin Libéral
-          </p>
+          </h1>
 
           {ratesState.status === "loading" && (
             <div className="mt-8 text-zinc-500 dark:text-zinc-400">
@@ -97,7 +102,10 @@ export default function Home() {
           )}
 
           {ratesState.status === "error" && (
-            <div className="mt-8 rounded-lg border border-rose-200 bg-rose-50 p-4 text-rose-800 dark:border-rose-800 dark:bg-rose-950 dark:text-rose-200">
+            <div
+              className="mt-8 rounded-lg border border-rose-200 bg-rose-50 p-4 text-rose-800 dark:border-rose-800 dark:bg-rose-950 dark:text-rose-200"
+              role="alert"
+            >
               <p className="font-medium">Erreur</p>
               <p className="text-sm">{ratesState.message}</p>
             </div>
@@ -116,7 +124,10 @@ export default function Home() {
               )}
 
               {simError && (
-                <div className="mt-6 rounded-lg border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800 dark:border-rose-800 dark:bg-rose-950 dark:text-rose-200">
+                <div
+                  className="mt-6 rounded-lg border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800 dark:border-rose-800 dark:bg-rose-950 dark:text-rose-200"
+                  role="alert"
+                >
                   {simError}
                 </div>
               )}

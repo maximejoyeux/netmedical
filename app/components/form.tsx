@@ -46,7 +46,6 @@ export default function Form({ values, onChange }: FormProps) {
       <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">
         Simulation
       </h2>
-
       <div className="flex flex-col gap-1">
         <Label htmlFor="honoraires">Honoraires annuels (€)</Label>
         <Input
