@@ -2,10 +2,12 @@
 
 import type { SimulateResponse } from "@/lib/types";
 import BreakdownChart from "./breakdown-chart";
+import { Button } from "./ui/button";
 
 interface ResultsProps {
   data: SimulateResponse;
   honoraires: number;
+  onExportPdf?: () => void;
 }
 
 function formatEuro(n: number) {
@@ -26,12 +28,24 @@ function formatEuroDecimals(n: number) {
   }).format(n);
 }
 
-export default function Results({ data, honoraires }: ResultsProps) {
+export default function Results({ data, honoraires, onExportPdf }: ResultsProps) {
   return (
     <div className="w-full space-y-6 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-      <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">
-        Résultat de la simulation
-      </h2>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+          Résultat de la simulation
+        </h2>
+        {onExportPdf && (
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={onExportPdf}
+            aria-label="Télécharger le résultat en PDF"
+          >
+            Télécharger en PDF
+          </Button>
+        )}
+      </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="rounded-lg bg-zinc-50 p-4 dark:bg-zinc-800">

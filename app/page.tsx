@@ -1,10 +1,14 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import Sidebar from "./components/sidebar";
+import ThemeToggle from "./components/theme-toggle";
 import Form, { FormValues } from "./components/form";
 import Results from "./components/results";
 import { fetchRates, simulate } from "@/lib/api";
+import { buildSimulationPdf } from "@/lib/pdfExport";
 import type { RatesResponse, SimulateResponse } from "@/lib/types";
 
 type RatesState =
@@ -90,7 +94,22 @@ export default function Home() {
         role="main"
         tabIndex={-1}
       >
-        <div className="mx-auto flex items-start flex-col px-4 py-8 pt-2 sm:px-6">
+        <div className="mx-auto flex items-center flex-col px-4 py-8 pt-2 sm:px-6">
+          <header className="mb-4 flex items-center gap-3 md:hidden">
+            <Link
+              href="/"
+              className="rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-500 focus-visible:ring-offset-2 dark:focus-visible:ring-zinc-400 dark:focus-visible:ring-offset-zinc-900"
+            >
+              <Image
+                src="/net-medical.svg"
+                alt="NetMédical — Accueil"
+                width={220}
+                height={53}
+                className="dark:invert"
+                priority
+              />
+            </Link>
+          </header>
           <h1 className="text-center mt-4 font-semibold text-zinc-900 dark:text-zinc-50 text-xl">
             Simulateur de Revenu Net — Médecin Libéral
           </h1>
@@ -134,7 +153,13 @@ export default function Home() {
 
               {simResult && !simError && (
                 <div className="mt-8 w-full">
-                  <Results data={simResult} honoraires={formValues.honoraires} />
+                  <Results
+                    data={simResult}
+                    honoraires={formValues.honoraires}
+                    onExportPdf={() =>
+                      buildSimulationPdf(formValues, simResult)
+                    }
+                  />
                 </div>
               )}
             </div>

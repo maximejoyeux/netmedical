@@ -7,7 +7,7 @@ import ThemeToggle from "./theme-toggle";
 export default function Sidebar() {
   return (
     <aside
-      className="flex w-56 shrink-0 flex-col border-r border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900"
+      className="hidden w-56 shrink-0 flex-col border-r border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900 md:flex"
       role="banner"
     >
       <div className="flex h-18 items-center justify-between border-b border-zinc-200 px-4 py-3 dark:border-zinc-700">
