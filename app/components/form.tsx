@@ -31,6 +31,10 @@ export default function Form({ values, onChange }: FormProps) {
       });
     };
 
+  const selectAllOnFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    e.target.select();
+  };
+
   const handleRegimeChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const regime = e.target.value as Regime;
 
@@ -54,6 +58,7 @@ export default function Form({ values, onChange }: FormProps) {
           min={0}
           value={values.honoraires}
           onChange={handleNumberChange("honoraires")}
+          onFocus={selectAllOnFocus}
         />
       </div>
 
@@ -78,6 +83,7 @@ export default function Form({ values, onChange }: FormProps) {
           disabled={values.regime === "micro"}
           value={values.regime === "micro" ? 0 : values.charges}
           onChange={handleNumberChange("charges")}
+          onFocus={selectAllOnFocus}
         />
       </div>
 
@@ -90,6 +96,7 @@ export default function Form({ values, onChange }: FormProps) {
           step={1}
           value={values.partsFiscales}
           onChange={handleNumberChange("partsFiscales")}
+          onFocus={selectAllOnFocus}
         />
       </div>
     </div>

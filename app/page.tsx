@@ -109,6 +109,9 @@ export default function Home() {
                 priority
               />
             </Link>
+            <div className="absolute right-2">
+              <ThemeToggle/>
+            </div>
           </header>
           <h1 className="text-center mt-4 font-semibold text-zinc-900 dark:text-zinc-50 text-xl">
             Simulateur de Revenu Net — Médecin Libéral

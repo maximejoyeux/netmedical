@@ -10,7 +10,7 @@ export default function ThemeToggle() {
     <button
       type="button"
       onClick={toggleTheme}
-      className="flex h-10 w-10 items-center justify-center rounded-lg text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-500 focus-visible:ring-offset-2 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100 dark:focus-visible:ring-zinc-400 dark:focus-visible:ring-offset-zinc-900"
+      className="cursor-pointer flex h-10 w-10 items-center justify-center rounded-lg text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-500 focus-visible:ring-offset-2 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100 dark:focus-visible:ring-zinc-400 dark:focus-visible:ring-offset-zinc-900"
       aria-label={isDark ? "Basculer en mode clair" : "Basculer en mode sombre"}
       title={isDark ? "Mode clair" : "Mode sombre"}
     >
