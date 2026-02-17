@@ -10,7 +10,7 @@ test.describe("Page d'accueil", () => {
 
   test("affiche le logo NetMédical", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByAltText(/NetMédical/)).toBeVisible();
+    await expect(page.getByAltText(/NetMédical/).first()).toBeVisible();
   });
 });
 
